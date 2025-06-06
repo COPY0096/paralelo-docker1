@@ -1,0 +1,11 @@
+{
+  "name": "test-script-carga",
+  "version": "1.0.0",
+  "main": "generar_carga.js",
+  "scripts": {
+    "start": "node generar_carga.js"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.7"
+  }
+}

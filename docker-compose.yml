@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  api-gateway:
+    build:
+      context: ./api-gateway
+    image: api-gateway:latest
+    container_name: api-gateway
+    restart: always
+    environment:
+      - URL_PROCESADOR=http://nginx:80
+      - URL_NOTIFICADOR=http://notificador:3002
+    ports:
+      - "3000:3000"
+    depends_on:
+      - nginx
+      - notificador
+
+  procesador1:
+    build:
+      context: ./procesador
+    image: procesador:latest
+    container_name: procesador1
+    restart: always
+    environment:
+      - URL_NOTIFICADOR=http://notificador:3002
+    expose:
+      - "3001"
+
+  procesador2:
+    build:
+      context: ./procesador
+    image: procesador:latest
+    container_name: procesador2
+    restart: always
+    environment:
+      - URL_NOTIFICADOR=http://notificador:3002
+    expose:
+      - "3001"
+
+  procesador3:
+    build:
+      context: ./procesador
+    image: procesador:latest
+    container_name: procesador3
+    restart: always
+    environment:
+      - URL_NOTIFICADOR=http://notificador:3002
+    expose:
+      - "3001"
+
+  notificador:
+    build:
+      context: ./notificador
+    image: notificador:latest
+    container_name: notificador
+    restart: always
+    ports:
+      - "3002:3002"
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    restart: always
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "80:80"
+    depends_on:
+      - procesador1
+      - procesador2
+      - procesador3
