@@ -11,7 +11,7 @@ services:
       - URL_PROCESADOR=http://nginx:80
       - URL_NOTIFICADOR=http://notificador:3002
     ports:
-      - "3000:3000"
+      - "3001:3001"
     depends_on:
       - nginx
       - notificador
@@ -25,7 +25,7 @@ services:
     environment:
       - URL_NOTIFICADOR=http://notificador:3002
     expose:
-      - "3001"
+      - "3000"
 
   procesador2:
     build:
@@ -36,7 +36,7 @@ services:
     environment:
       - URL_NOTIFICADOR=http://notificador:3002
     expose:
-      - "3001"
+      - "3000"
 
   procesador3:
     build:
@@ -47,7 +47,7 @@ services:
     environment:
       - URL_NOTIFICADOR=http://notificador:3002
     expose:
-      - "3001"
+      - "3000"
 
   notificador:
     build:

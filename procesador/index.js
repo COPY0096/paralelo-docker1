@@ -1,20 +1,26 @@
-// “TODO: implementar lógica”.
 const express = require('express');
 const { Worker } = require('worker_threads');
 const os = require('os');
+const fetch = require('node-fetch');
 
 const app = express();
 app.use(express.json());
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
+
+// Ruta de health check para ECS
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok' });
+});
 
 app.post('/procesar', (req, res) => {
   const payload = req.body; // { taskId, deviceId, complexity }
 
+  // Crear un worker que ejecute ./worker.js con workerData = payload
   const worker = new Worker('./worker.js', { workerData: payload });
 
   worker.on('message', result => {
-    const fetch = require('node-fetch');
+    // Cuando el worker termina, notificar al Notificador
     fetch(`${process.env.URL_NOTIFICADOR}/notify`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -28,6 +34,7 @@ app.post('/procesar', (req, res) => {
       })
       .catch(err => console.error('Error al notificar:', err));
 
+    // Responder al API Gateway con el resultado
     res.json({ taskId: payload.taskId, status: 'procesado', result });
   });
 

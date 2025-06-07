@@ -6,7 +6,7 @@ const fetch = require('node-fetch');
 const app = express();
 app.use(express.json());
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 const URL_PROCESADOR = process.env.URL_PROCESADOR || 'http://nginx:80';
 const URL_NOTIFICADOR = process.env.URL_NOTIFICADOR || 'http://notificador:3002';
 

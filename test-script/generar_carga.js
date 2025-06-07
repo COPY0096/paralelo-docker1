@@ -2,7 +2,7 @@ console.log('Script de generación de carga - placeholder');
 
 const fetch = require('node-fetch');
 
-const URL_API_GATEWAY = process.env.URL_API_GATEWAY || 'http://localhost:3000/api/facturar';
+const URL_API_GATEWAY = process.env.URL_API_GATEWAY || 'http://localhost:3001/api/facturar';
 const TOTAL_REQUESTS = parseInt(process.env.TOTAL_REQUESTS) || 20;
 const COMPLEXITY = parseInt(process.env.COMPLEXITY) || 80000;
 

@@ -1,5 +1,4 @@
-console.log('Bienvenida al Notificador - placeholder');
-
+// notificador/index.js
 const express = require('express');
 const app = express();
 app.use(express.json());
